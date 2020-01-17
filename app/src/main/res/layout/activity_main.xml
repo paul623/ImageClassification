@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:layout_marginTop="@dimen/album_dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="图片分类测试V1.0"
+        android:textSize="30sp"
+        android:gravity="center"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:padding="10dp">
+        <TextView
+            android:text="点击按钮选择要识别的图片吧！"
+            android:id="@+id/tv_output"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </ScrollView>
+    <Button
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:text="选择要识别的图片"
+        android:id="@+id/btn_openPicker"
+        android:background="@drawable/btn_bg_red"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="扫描本地图片"
+        android:id="@+id/btn_openScan"
+        android:background="@drawable/btn_bg_red"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:gravity="center"
+            android:text="MADE BY 巴塞罗那的余晖\n MODEL POWERED BY TAIYUECHEN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"/>
+    </LinearLayout>
+
+</LinearLayout>

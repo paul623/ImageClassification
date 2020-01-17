@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="ImageClassificationDataBase"/>
+    <version value="1"/>
+    <list>
+        <mapping class="com.paul.imageclassification.Bean.ClassifierBean"/>
+        <mapping class="com.paul.imageclassification.Bean.KindsBean"/>
+    </list>
+</litepal>
