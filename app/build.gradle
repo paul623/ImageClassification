@@ -7,8 +7,8 @@ android {
         applicationId "com.paul.imageclassification"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1-alpha"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -17,14 +17,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+
+    }
     aaptOptions {
         noCompress "tflite"  //表示不让aapt压缩的文件后缀
     }
-    /*defaultConfig {
+    defaultConfig {
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
-    }*/
+    }
 }
 
 dependencies {
@@ -44,4 +49,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
     implementation 'org.litepal.android:java:3.0.0'
+
+    //选择器
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:2.4.5'
 }

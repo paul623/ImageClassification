@@ -2,18 +2,29 @@ package com.paul.imageclassification;
 
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.paul.imageclassification.Util.GlideEngine;
 import com.paul.imageclassification.Util.ImageUtil;
 import com.paul.imageclassification.Util.Logger;
 import com.paul.imageclassification.Util.MediaLoader;
@@ -25,6 +36,7 @@ import com.yanzhenjie.album.AlbumConfig;
 import com.yanzhenjie.album.AlbumFile;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +71,8 @@ public class MainActivity extends Activity {
                             public void onAction(@NonNull ArrayList<AlbumFile> result) {
                                 for(AlbumFile i:result){
                                     str=str+"图片路径："+i.getPath()+"\n";
-                                    str=str+initEveryThing(ImageUtil.getBitmapFromSrc(i.getPath()))+"\n";
+                                    //str=str+initEveryThing(ImageUtil.getBitmapFromSrc(i.getPath()))+"\n";
+                                    str=str+initEveryThing(ImageUtil.getBitmapFromUri(MainActivity.this,ImageUtil.getImageContentUri(MainActivity.this,i.getPath())));
                                 }
                                 textView.setText(str);
                             }
@@ -70,7 +83,13 @@ public class MainActivity extends Activity {
                             }
                         })
                         .start();
+                /*ContentValues contentValues = new ContentValues();
+                contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, "DCIM");*/
+                //Toast.makeText(MainActivity.this,"维修中",Toast.LENGTH_SHORT).show();
+
             }
+
+
         });
         btn_scan.setOnClickListener(new View.OnClickListener() {
             @Override

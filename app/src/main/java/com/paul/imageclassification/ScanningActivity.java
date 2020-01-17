@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -135,7 +136,9 @@ public class ScanningActivity extends Activity {
             //获取所有图片存入list集合 getGalleryPhotos方法
             allPath = new ArrayList<>();
             //allPath = getGalleryPhotos(getContentResolver());
-            allPath= FileManager.getFilePathList(ScanningActivity.this);
+
+            //allPath= FileManager.getFilePathList(ScanningActivity.this);
+            allPath=FileManager.getImageFileList(ScanningActivity.this);
             Log.d("tgw所有图片地址", "initAbbreviation: " + allPath.toString());
             src=src+"获取所有图片地址共"+allPath.size()+"张\n";
             src=src+"目前筛选准确率为"+correct_point+"\n";
@@ -197,7 +200,8 @@ public class ScanningActivity extends Activity {
 
     }
     public String initEveryThing(String path,int i){
-        Bitmap bitmap=ImageUtil.getBitmapFromSrc(path);
+        //Bitmap bitmap=ImageUtil.getBitmapFromSrc(path);
+        Bitmap bitmap= ImageUtil.getBitmapFromUri(ScanningActivity.this,ImageUtil.getImageContentUri(ScanningActivity.this,path));
         logger.printLog("开始执行");
         String result="";
         logger.printLog("读取本地图片中");

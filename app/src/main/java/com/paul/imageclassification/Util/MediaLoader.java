@@ -8,6 +8,8 @@ import com.paul.imageclassification.R;
 import com.yanzhenjie.album.AlbumFile;
 import com.yanzhenjie.album.AlbumLoader;
 
+import java.net.URI;
+
 public class MediaLoader implements AlbumLoader {
     @Override
     public void load(ImageView imageView, AlbumFile albumFile) {
@@ -17,7 +19,7 @@ public class MediaLoader implements AlbumLoader {
     @Override
     public void load(ImageView imageView, String url) {
         Glide.with(imageView.getContext())
-                .load(url)
+                .load(ImageUtil.getBitmapFromUri(imageView.getContext(),ImageUtil.getImageContentUri(imageView.getContext(),url)))
                 .error(R.drawable.icon_error_loading)
                 .placeholder(R.drawable.icon_loading_image)
                 .into(imageView);

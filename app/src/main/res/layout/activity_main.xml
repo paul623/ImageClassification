@@ -9,7 +9,7 @@
         android:layout_marginTop="@dimen/album_dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="图片分类测试V1.0"
+        android:text="图片分类测试V1.1"
         android:textSize="30sp"
         android:gravity="center"/>
     <ScrollView
