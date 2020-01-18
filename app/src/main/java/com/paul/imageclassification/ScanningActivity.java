@@ -32,6 +32,7 @@ import com.paul.imageclassification.Bean.KindsBean;
 import com.paul.imageclassification.Util.FileManager;
 import com.paul.imageclassification.Util.ImageUtil;
 import com.paul.imageclassification.Util.Logger;
+import com.paul.imageclassification.Util.TimeCounter;
 import com.paul.imageclassification.tensorLite.Classifier;
 import com.paul.imageclassification.tensorLite.ClassifierFloatMobileNet;
 import com.yanzhenjie.album.Album;
@@ -51,8 +52,9 @@ public class ScanningActivity extends Activity {
     String src="";
     private Classifier.Model model = Classifier.Model.FLOAT;
     private Classifier.Device device = Classifier.Device.CPU;
-    private int numThreads = 1;
+    private int numThreads = 5;
     private Classifier classifier;
+    TimeCounter timeCounter;
     Logger logger=new Logger("ScanningActivity");
     public List<String> allPath;
     public ListView listView;
@@ -73,6 +75,8 @@ public class ScanningActivity extends Activity {
                     src=src+"正在执行分类汇总\n";
                     textView.setText(src);
                     listView.setAdapter(new ScanningListAdapter(dealWithResult(),ScanningActivity.this));
+                    src=src+"处理完成,耗时"+timeCounter.stop();
+                    textView.setText(src);
                     break;
             }
             return false;
@@ -83,6 +87,7 @@ public class ScanningActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanning);
         LitePal.initialize(this);
+        timeCounter=new TimeCounter();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
             Window window = getWindow();
@@ -92,6 +97,7 @@ public class ScanningActivity extends Activity {
             window.setStatusBarColor(getResources().getColor(R.color.white));
         }
         try {
+            timeCounter.start();
             classifier=new ClassifierFloatMobileNet(this,device,numThreads);
             listView=findViewById(R.id.lv_album_lessonselect);
             textView=findViewById(R.id.tv_content);
@@ -140,8 +146,12 @@ public class ScanningActivity extends Activity {
             //allPath= FileManager.getFilePathList(ScanningActivity.this);
             allPath=FileManager.getImageFileList(ScanningActivity.this);
             Log.d("tgw所有图片地址", "initAbbreviation: " + allPath.toString());
+            src=src+"线程数："+numThreads+" 浮点类型 工作模式：CPU"+"\n";
             src=src+"获取所有图片地址共"+allPath.size()+"张\n";
-            src=src+"目前筛选准确率为"+correct_point+"\n";
+            src=src+"目前筛选准确率大于"+correct_point+"的图片"+"\n";
+            if(allPath.size()>=200){
+                src=src+"选择200张进行判断\n";
+            }
             textView.setText(src);
             Message message=new Message();
             src=src+"正在识别图片,请耐心等待\n";
