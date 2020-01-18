@@ -52,7 +52,9 @@ public class ScanningListAdapter extends BaseAdapter {
         ImageView headIcon=view1.findViewById(R.id.album_lesson_iv);
         TextView courseName=view1.findViewById(R.id.album_lesson_tv);
         TextView numCourse=view1.findViewById(R.id.album_lesson_tv_count);
-        Glide.with(context).load(ImageUtil.getBitmapByPath(context,kindsBeans.get(i).getFirstPhotoPath())).into(headIcon);
+        Glide.with(context).
+                load(ImageUtil.getBitmapByPath(context,kindsBeans.get(i).getFirstPhotoPath())).
+                into(headIcon);
         //2020.1.8适配安卓Q
         //headIcon.setImageDrawable(Drawable.createFromPath(kindsBeans.get(i).getFirstPhotoPath()));
         courseName.setText(kindsBeans.get(i).getKindName());

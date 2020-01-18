@@ -14,6 +14,8 @@ import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.paul.imageclassification.R;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -32,6 +34,9 @@ public class ImageUtil {
      * @param path 相对路径（在安卓Q下会失效）
      * */
     public static Bitmap getBitmapByPath(Context context,String path){
+        if(path==null||path.equals("")){
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_error_loading);
+        }
         //适配安卓Q
         //由于安卓Q采用了沙盒模式，故必须根据Uri来加载图片
         if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
