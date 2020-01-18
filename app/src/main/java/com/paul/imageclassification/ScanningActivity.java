@@ -201,7 +201,7 @@ public class ScanningActivity extends Activity {
     }
     public String initEveryThing(String path,int i){
         //Bitmap bitmap=ImageUtil.getBitmapFromSrc(path);
-        Bitmap bitmap= ImageUtil.getBitmapFromUri(ScanningActivity.this,ImageUtil.getImageContentUri(ScanningActivity.this,path));
+        Bitmap bitmap= ImageUtil.getBitmapByPath(ScanningActivity.this,path);
         logger.printLog("开始执行");
         String result="";
         logger.printLog("读取本地图片中");

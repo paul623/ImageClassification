@@ -10,8 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.paul.imageclassification.Bean.KindsBean;
 import com.paul.imageclassification.R;
+import com.paul.imageclassification.Util.ImageUtil;
 
 import java.util.List;
 
@@ -50,7 +52,9 @@ public class ScanningListAdapter extends BaseAdapter {
         ImageView headIcon=view1.findViewById(R.id.album_lesson_iv);
         TextView courseName=view1.findViewById(R.id.album_lesson_tv);
         TextView numCourse=view1.findViewById(R.id.album_lesson_tv_count);
-        headIcon.setImageDrawable(Drawable.createFromPath(kindsBeans.get(i).getFirstPhotoPath()));
+        Glide.with(context).load(ImageUtil.getBitmapByPath(context,kindsBeans.get(i).getFirstPhotoPath())).into(headIcon);
+        //2020.1.8适配安卓Q
+        //headIcon.setImageDrawable(Drawable.createFromPath(kindsBeans.get(i).getFirstPhotoPath()));
         courseName.setText(kindsBeans.get(i).getKindName());
         numCourse.setText(kindsBeans.get(i).getKindNumber()+"张");
         return view1;

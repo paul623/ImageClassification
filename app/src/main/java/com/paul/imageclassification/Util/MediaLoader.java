@@ -1,6 +1,7 @@
 package com.paul.imageclassification.Util;
 
 
+import android.os.Build;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -19,7 +20,7 @@ public class MediaLoader implements AlbumLoader {
     @Override
     public void load(ImageView imageView, String url) {
         Glide.with(imageView.getContext())
-                .load(ImageUtil.getBitmapFromUri(imageView.getContext(),ImageUtil.getImageContentUri(imageView.getContext(),url)))
+                .load(ImageUtil.getBitmapByPath(imageView.getContext(), url))
                 .error(R.drawable.icon_error_loading)
                 .placeholder(R.drawable.icon_loading_image)
                 .into(imageView);

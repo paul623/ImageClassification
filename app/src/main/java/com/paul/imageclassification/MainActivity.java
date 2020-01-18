@@ -2,16 +2,10 @@ package com.paul.imageclassification;
 
 
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,10 +15,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.luck.picture.lib.PictureSelector;
-import com.luck.picture.lib.config.PictureConfig;
-import com.luck.picture.lib.config.PictureMimeType;
-import com.paul.imageclassification.Util.GlideEngine;
 import com.paul.imageclassification.Util.ImageUtil;
 import com.paul.imageclassification.Util.Logger;
 import com.paul.imageclassification.Util.MediaLoader;
@@ -36,7 +26,6 @@ import com.yanzhenjie.album.AlbumConfig;
 import com.yanzhenjie.album.AlbumFile;
 
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +35,7 @@ public class MainActivity extends Activity {
     private Classifier.Device device = Classifier.Device.CPU;
     private int numThreads = 5;
     private Classifier classifier;
-    private TextView textView;
+    private TextView textView,tv_android;
     private Button btn_open;
     private Button btn_scan;
     private String str="";
@@ -56,6 +45,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView=findViewById(R.id.tv_output);
+        tv_android=findViewById(R.id.tv_android_version);
         btn_open=findViewById(R.id.btn_openPicker);
         btn_scan=findViewById(R.id.btn_openScan);
         btn_open.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +62,7 @@ public class MainActivity extends Activity {
                                 for(AlbumFile i:result){
                                     str=str+"图片路径："+i.getPath()+"\n";
                                     //str=str+initEveryThing(ImageUtil.getBitmapFromSrc(i.getPath()))+"\n";
-                                    str=str+initEveryThing(ImageUtil.getBitmapFromUri(MainActivity.this,ImageUtil.getImageContentUri(MainActivity.this,i.getPath())));
+                                    str=str+initEveryThing(ImageUtil.getBitmapByPath(MainActivity.this,i.getPath()));
                                 }
                                 textView.setText(str);
                             }
@@ -88,8 +78,6 @@ public class MainActivity extends Activity {
                 //Toast.makeText(MainActivity.this,"维修中",Toast.LENGTH_SHORT).show();
 
             }
-
-
         });
         btn_scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +97,11 @@ public class MainActivity extends Activity {
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             window.setStatusBarColor(getResources().getColor(R.color.white));
         }
+        String android_version="目前安卓SDK："+Build.VERSION.SDK_INT+"\n";
+        android_version=android_version+"本应用已针对29及以上进行适配，可能会稍有卡顿"+"\n";
+        android_version=android_version+"如遇到闪退情况请联系：zhubaoluo@outlook.com";
+        tv_android.setText(android_version);
+
     }
 
     public String initEveryThing(Bitmap bitmap){

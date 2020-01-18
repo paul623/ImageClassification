@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -19,16 +20,31 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ImageUtil {
     private static final String TAG = "BitmapUtil";
 
     /**
+     * 通过path来获取图片
+     * 适配Q
+     * @param context 上下文
+     * @param path 相对路径（在安卓Q下会失效）
+     * */
+    public static Bitmap getBitmapByPath(Context context,String path){
+        //适配安卓Q
+        //由于安卓Q采用了沙盒模式，故必须根据Uri来加载图片
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+            return getBitmapFromUri(context,getImageContentUri(context,path));
+        }else {
+            return getBitmapFromSrc(path);
+        }
+    }
+    /**
      * 适配安卓Q
      * 拿到图片地址后转换
      * */
-
-    public static Bitmap getBitmapFromUri(Context context, Uri uri) {
+    private static Bitmap getBitmapFromUri(Context context, Uri uri) {
         try {
             ParcelFileDescriptor parcelFileDescriptor =
                     context.getContentResolver().openFileDescriptor(uri, "r");
@@ -41,13 +57,11 @@ public class ImageUtil {
         }
         return null;
     }
-
-
     /**
      * 适配安卓Q
      * 由地址获得URI
      * */
-    public static Uri getImageContentUri(Context context, String path) {
+    private static Uri getImageContentUri(Context context, String path) {
         Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + "=? ",
                 new String[] { path }, null);
