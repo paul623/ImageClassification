@@ -8,4 +8,5 @@ TFLite for android test
 
 支持安卓9及以下的版本
 
-由于安卓Q更改了路径，暂未适配
+适配安卓Q
+支持耗时查看
