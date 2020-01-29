@@ -68,14 +68,14 @@ public class ScanningActivity extends Activity {
             switch (message.what){
                 case 1:
                     processPhoto();
-                    src=src+"图片处理完成\n";
+                    src=src+"Image processing completed\n";
                     textView.setText(src);
                     break;
                 case 2:
-                    src=src+"正在执行分类汇总\n";
+                    src=src+"Sorting summary is being performed\n";
                     textView.setText(src);
                     listView.setAdapter(new ScanningListAdapter(dealWithResult(),ScanningActivity.this));
-                    src=src+"处理完成,耗时"+timeCounter.stop();
+                    src=src+"Process Finished,elapsed time:"+timeCounter.stop();
                     textView.setText(src);
                     break;
             }
@@ -146,15 +146,15 @@ public class ScanningActivity extends Activity {
             //allPath= FileManager.getFilePathList(ScanningActivity.this);
             allPath=FileManager.getImageFileList(ScanningActivity.this);
             Log.d("tgw所有图片地址", "initAbbreviation: " + allPath.toString());
-            src=src+"线程数："+numThreads+" 浮点类型 工作模式：CPU"+"\n";
-            src=src+"获取所有图片地址共"+allPath.size()+"张\n";
-            src=src+"目前筛选准确率大于"+correct_point+"的图片"+"\n";
+            src=src+"Thread Number："+numThreads+" Float Working Mode：CPU"+"\n";
+            src=src+"Get all picture addresses numbers:"+allPath.size()+"\n";
+            src=src+"At present, the screening accuracy is higher than"+correct_point+"\n";
             if(allPath.size()>=200){
-                src=src+"选择200张进行判断\n";
+                src=src+"Select 200 pictures to identify\n";
             }
             textView.setText(src);
             Message message=new Message();
-            src=src+"正在识别图片,请耐心等待\n";
+            src=src+"Identifying picture, please wait patiently\n";
             textView.setText(src);
             message.what=1;
             handler.sendMessage(message);
@@ -212,12 +212,12 @@ public class ScanningActivity extends Activity {
     public String initEveryThing(String path,int i){
         //Bitmap bitmap=ImageUtil.getBitmapFromSrc(path);
         Bitmap bitmap= ImageUtil.getBitmapByPath(ScanningActivity.this,path);
-        logger.printLog("开始执行");
+        logger.printLog("Start");
         String result="";
-        logger.printLog("读取本地图片中");
-        logger.printLog("分类器创建成功！");
+        logger.printLog("Reading local images");
+        logger.printLog("Classifier created successfully!");
         List<Classifier.Recognition> results = classifier.recognizeImage(ImageUtil.scaleImage(bitmap, 224, 224));
-        logger.printLog("正在识别");
+        logger.printLog("Identifying");
         if (results.size() == 0) {
         } else {
             if (results.get(0).getConfidence() >= correct_point) {
@@ -241,7 +241,7 @@ public class ScanningActivity extends Activity {
 
     }
     public List<KindsBean> dealWithResult(){
-        src=src+"正在处理最后结果汇总···\n";
+        src=src+"Final result summary is being processed···\n";
         textView.setText(src);
         int a=0;
         int b=0;
@@ -266,11 +266,11 @@ public class ScanningActivity extends Activity {
             }
         }
         page_image.setKindNumber(a);
-        page_image.setKindName("文档");
+        page_image.setKindName("page_image");
         power_image.setKindNumber(b);
-        power_image.setKindName("幻灯片");
+        power_image.setKindName("powerpoint_image");
         writing_image.setKindNumber(c);
-        writing_image.setKindName("黑板");
+        writing_image.setKindName("writing_image");
         List<KindsBean> list1=new ArrayList<>();
         list1.add(page_image);
         list1.add(power_image);

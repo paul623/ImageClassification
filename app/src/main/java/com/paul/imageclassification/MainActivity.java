@@ -2,6 +2,9 @@ package com.paul.imageclassification;
 
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -12,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 
@@ -39,7 +43,7 @@ public class MainActivity extends Activity {
     private Button btn_open;
     private Button btn_scan;
     private String str="";
-    Logger logger=new Logger("测试！");
+    Logger logger=new Logger("Test");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +59,12 @@ public class MainActivity extends Activity {
                         .multipleChoice()
                         .camera(true)
                         .columnCount(4)
-                        .selectCount(9)
+                        .selectCount(20)
                         .onResult(new Action<ArrayList<AlbumFile>>() {
                             @Override
                             public void onAction(@NonNull ArrayList<AlbumFile> result) {
                                 for(AlbumFile i:result){
-                                    str=str+"图片路径："+i.getPath()+"\n";
+                                    str=str+"ImageFileDir："+i.getPath()+"\n";
                                     //str=str+initEveryThing(ImageUtil.getBitmapFromSrc(i.getPath()))+"\n";
                                     str=str+initEveryThing(ImageUtil.getBitmapByPath(MainActivity.this,i.getPath()));
                                 }
@@ -97,32 +101,43 @@ public class MainActivity extends Activity {
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             window.setStatusBarColor(getResources().getColor(R.color.white));
         }
-        String android_version="目前安卓SDK："+Build.VERSION.SDK_INT+"\n";
-        android_version=android_version+"本应用已针对29及以上进行适配，可能会稍有卡顿"+"\n";
-        android_version=android_version+"如遇到闪退情况请联系：zhubaoluo@outlook.com";
+        String android_version="Cur Android SDK："+Build.VERSION.SDK_INT+"\n";
+        android_version=android_version+"This application has been adapted for 29 and above"+"\n";
+        android_version=android_version+"If you have problems,please contact：zhubaoluo@outlook.com";
         tv_android.setText(android_version);
-
+        tv_android.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ClipboardManager cm;
+                ClipData mClipData;
+                cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                mClipData = ClipData.newPlainText("ImageClassification", str);
+                cm.setPrimaryClip(mClipData);
+                Toast.makeText(MainActivity.this,"Results have been copied to clipboard",Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
     }
 
     public String initEveryThing(Bitmap bitmap){
-        logger.printLog("开始执行");
+        logger.printLog("Start");
         String result="";
         try {
-            logger.printLog("读取本地图片中");
+            logger.printLog("Reading local images");
             classifier=new ClassifierFloatMobileNet(this,device,numThreads);
-            logger.printLog("分类器创建成功！");
+            logger.printLog("Classifier created successfully!");
             List<Classifier.Recognition> results=classifier.recognizeImage(ImageUtil.scaleImage(bitmap,224,224));
-            logger.printLog("正在识别");
+            logger.printLog("Identifying");
             if(results.size()==0) {
-                textView.setText("啥都没有");
+                textView.setText("There is nothing here");
             }else {
                 textView.setText(results.get(0).getTitle());
                 for(Classifier.Recognition i:results){
-                    result=result+"推测结果："+i.getTitle()+" 可能性："+i.getConfidence()+"\n";
+                    result=result+"Result："+i.getTitle()+" Possibility："+i.getConfidence()+"\n";
                 }
             }
         } catch (IOException e) {
-            logger.printLog("出错了！"+e);
+            logger.printLog("Error:"+e);
             e.printStackTrace();
         }
         return result;

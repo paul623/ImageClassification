@@ -8,7 +8,9 @@ public class ClassifierFloatMobileNet extends Classifier {
     /** MobileNet requires additional normalization of the used input.
      * Float类型的图片配置
      * */
+    //输入图像矩阵的均值
     private static final float IMAGE_MEAN = 127.5f;
+    //标准差
     private static final float IMAGE_STD = 127.5f;
     private static final int IMAGE_X=224;
     private static final int IMAGE_Y=224;
