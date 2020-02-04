@@ -1,0 +1,1 @@
+tflite_convert  --graph_def_file=./tf.pd --output_format=TFLITE   --output_file=./model.tflite --inference_type=FLOAT  --input_arrays="input_1"   --output_arrays="dense_1/Softmax" --input_shapes="1,224, 224, 3"
