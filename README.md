@@ -1,8 +1,4 @@
 # ImageClassification
-TFLite for android test
-
-Datasets and Training Codes [PLUTO](https://github.com/paul623/PLUTO)
-
 Used to test the accuracy of TFLite on mobile phones
 
 ## How To Use
