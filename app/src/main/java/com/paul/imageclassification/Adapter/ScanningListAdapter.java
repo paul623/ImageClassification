@@ -58,7 +58,7 @@ public class ScanningListAdapter extends BaseAdapter {
         //2020.1.8适配安卓Q
         //headIcon.setImageDrawable(Drawable.createFromPath(kindsBeans.get(i).getFirstPhotoPath()));
         courseName.setText(kindsBeans.get(i).getKindName());
-        numCourse.setText(kindsBeans.get(i).getKindNumber()+"张");
+        numCourse.setText(kindsBeans.get(i).getKindNumber()+"");
         return view1;
     }
 }
