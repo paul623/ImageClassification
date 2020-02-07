@@ -6,6 +6,7 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView
+        android:textColor="@color/black"
         android:layout_marginTop="@dimen/album_dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,12 +18,14 @@
         android:layout_height="300dp"
         android:padding="10dp">
         <TextView
+            android:textColor="@color/black"
             android:text="Click the button to select the image you want to recognize"
             android:id="@+id/tv_output"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </ScrollView>
     <Button
+        android:textColor="@color/black"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
@@ -37,6 +40,7 @@
         android:layout_marginRight="20dp"
         android:text="Scan local images"
         android:id="@+id/btn_openScan"
+        android:textColor="@color/black"
         android:background="@drawable/btn_bg_red"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -45,12 +49,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
+            android:textColor="@color/black"
             android:id="@+id/tv_android_version"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <TextView
+            android:textColor="@color/black"
             android:layout_weight="2"
             android:gravity="center"
             android:text="MADE BY Paul623\n MODEL POWERED BY TAIYUECHEN"

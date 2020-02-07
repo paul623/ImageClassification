@@ -75,7 +75,7 @@ public class ScanningActivity extends Activity {
                     src=src+"Sorting summary is being performed\n";
                     textView.setText(src);
                     listView.setAdapter(new ScanningListAdapter(dealWithResult(),ScanningActivity.this));
-                    src=src+"Process Finished,elapsed time:"+timeCounter.stop();
+                    src=src+"Process Finished, elapsed time: "+timeCounter.stop();
                     textView.setText(src);
                     break;
             }
@@ -148,7 +148,7 @@ public class ScanningActivity extends Activity {
             Log.d("tgw所有图片地址", "initAbbreviation: " + allPath.toString());
             src=src+"Thread Number："+numThreads+" Float Working Mode：CPU"+"\n";
             src=src+"Get all picture addresses numbers:"+allPath.size()+"\n";
-            src=src+"At present, the screening accuracy is higher than"+correct_point+"\n";
+            src=src+"At present, the screening accuracy is higher than "+correct_point+"\n";
             if(allPath.size()>=200){
                 src=src+"Select 200 pictures to identify\n";
             }

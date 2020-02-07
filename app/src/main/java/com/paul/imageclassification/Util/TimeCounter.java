@@ -12,9 +12,9 @@ public class TimeCounter {
         long mills=totoalMills/1000000000;
         if(mills>=60){
             long minute=mills/60;
-            aa=minute+"分"+mills%60+"秒";
+            aa=minute+" minute(s) "+mills%60+" second(s)";
         }else {
-            aa=mills+"秒";
+            aa=mills+" second(s)";
         }
         return aa;
     }
